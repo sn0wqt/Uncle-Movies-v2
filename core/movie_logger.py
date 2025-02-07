@@ -1,5 +1,5 @@
-from data_handler import load_data, save_data
-from movie import get_movie, search_movie
+from .data_handler import load_data, save_data
+from .movie import search_movie, get_movie
 
 
 def get_movie_list():

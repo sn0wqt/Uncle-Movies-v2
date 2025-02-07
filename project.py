@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
-from commands import setup_bot
+from commands.commands import setup_bot
 import os
 
 

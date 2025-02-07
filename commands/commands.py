@@ -1,13 +1,7 @@
 import discord
 from discord import app_commands
 from reactionmenu import ViewMenu, ViewButton
-from movie_logger import (
-    get_movie_list,
-    search_movies,
-    add_movie,
-    rate_movie,
-    delete_movie,
-)
+from core.movie_logger import get_movie_list, search_movies, add_movie, delete_movie, rate_movie
 
 
 def create_movie_embed(movie, color):
