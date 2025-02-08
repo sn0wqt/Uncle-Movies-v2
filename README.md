@@ -95,6 +95,7 @@ The project is written in Python and leverages libraries like **discord.py**, **
 
 1. **Clone the Repository**
    - Open your terminal and run:
+
      ```bash
      git clone <your-repository-url>
      cd <repository-folder>
@@ -103,6 +104,7 @@ The project is written in Python and leverages libraries like **discord.py**, **
 
 2. **Install Dependencies**
    - Run:
+
      ```bash
      pip install -r requirements.txt
      ```
@@ -110,6 +112,7 @@ The project is written in Python and leverages libraries like **discord.py**, **
 
 3. **Configure Environment Variables**
    - Create a `.env` file in the project root and add your bot token:
+
      ```env
      BOT_TOKEN="<Your_Discord_Bot_Token>"
      ```
@@ -123,6 +126,7 @@ The project is written in Python and leverages libraries like **discord.py**, **
 
 5. **Start the Bot**
    - Launch it with:
+   
      ```
      python project.py
      ```
