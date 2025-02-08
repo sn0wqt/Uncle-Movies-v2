@@ -97,8 +97,8 @@ The project is written in Python and leverages libraries like **discord.py**, **
    - Open your terminal and run:
 
      ```bash
-     git clone <your-repository-url>
-     cd <repository-folder>
+     git clone https://github.com/Shiro-Koi/Uncle-Movies-v2.git
+     cd Uncle-Movies-v2
      ```
 
 
