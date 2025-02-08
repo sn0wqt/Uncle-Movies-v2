@@ -1,5 +1,14 @@
-from project import load_data, save_data, add_movie, delete_movie, rate_movie, get_movie_list, search_movies
+from project import (
+    load_data,
+    save_data,
+    add_movie,
+    delete_movie,
+    rate_movie,
+    get_movie_list,
+    search_movies,
+)
 import pytest
+
 
 def reset_movies_file():
     initial_data = {
@@ -35,6 +44,7 @@ def test_load_data():
 
     with pytest.raises(ValueError):
         load_data("./invalid.json")
+
 
 def test_save_data():
     reset_movies_file()

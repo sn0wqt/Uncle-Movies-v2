@@ -94,6 +94,7 @@ def add_movie(imdb_id):
     save_data(data)
     return f"{movie['title']} successfully added"
 
+
 def delete_movie(id):
     data = load_data()
     for movie in data["movies"]:
@@ -116,7 +117,8 @@ def rate_movie(id, user_rating):
 
 def create_movie_embed(movie, color):
     embed = discord.Embed(title=movie["title"], color=color)
-    embed.add_field(name="Movie ID", value=movie.get("id", "N/A"), inline=True)
+    if movie.get("id"):
+        embed.add_field(name="Movie ID", value=movie["id"], inline=True)
     embed.add_field(name="IMDb ID", value=movie["imdb_id"], inline=True)
     embed.add_field(name="Year", value=movie["year"], inline=True)
     embed.add_field(name="Rating", value=movie.get("rating", "N/A"), inline=True)
@@ -151,11 +153,9 @@ def setup_bot(bot):
         except Exception as e:
             print(f"Error syncing commands: {e}")
 
-
     @bot.tree.command(name="ping", description="Check if the bot is responsive")
     async def ping(interaction: discord.Interaction):
         await interaction.response.send_message("Pong!")
-
 
     @bot.tree.command(name="list", description="List all movies in your collection.")
     async def list(interaction: discord.Interaction):
@@ -172,14 +172,15 @@ def setup_bot(bot):
         menu.add_button(ViewButton.next())
         await menu.start()
 
-
     @bot.tree.command(name="search", description="Search for a movie by title.")
     @app_commands.describe(title="The title of the movie to search for")
     async def search(interaction: discord.Interaction, title: str):
         try:
+            await interaction.response.defer()
+
             movies = search_movies(title)
             if not movies:
-                await interaction.response.send_message("No results found.")
+                await interaction.followup.send("No results found.")
                 return
 
             menu = ViewMenu(interaction, menu_type=ViewMenu.TypeEmbed)
@@ -190,10 +191,11 @@ def setup_bot(bot):
             menu.add_button(ViewButton.next())
             await menu.start()
         except ValueError as e:
-            await interaction.response.send_message(str(e))
+            await interaction.followup.send(str(e))
 
-
-    @bot.tree.command(name="add", description="Add a movie to the list using its IMDB ID")
+    @bot.tree.command(
+        name="add", description="Add a movie to the list using its IMDB ID"
+    )
     @app_commands.describe(imdb_id="The IMDB ID of the movie")
     async def add(interaction: discord.Interaction, imdb_id: str):
         try:
@@ -203,7 +205,6 @@ def setup_bot(bot):
         except ValueError as e:
             await interaction.followup.send(str(e))
 
-
     @bot.tree.command(name="delete", description="Delete a movie from the list by ID")
     @app_commands.describe(id="The database ID of the movie to delete")
     async def delete(interaction: discord.Interaction, id: int):
@@ -212,7 +213,6 @@ def setup_bot(bot):
             await interaction.response.send_message(response)
         except ValueError as e:
             await interaction.response.send_message(str(e))
-
 
     @bot.tree.command(name="rate", description="Rate a movie in your collection.")
     @app_commands.describe(
@@ -224,7 +224,6 @@ def setup_bot(bot):
             await interaction.response.send_message(response)
         except ValueError as e:
             await interaction.response.send_message(str(e))
-
 
     @bot.tree.command(
         name="help",
