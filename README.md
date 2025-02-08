@@ -117,7 +117,7 @@ The project is implemented in Python and uses several libraries, including **dis
       ```
       BOT_TOKEN=<Your_Discord_Bot_Token>
       ```
-        -`<Your_Discord_Bot_Token>` should be inside quotations
+        - `<Your_Discord_Bot_Token>` should be inside quotations
 
 4. **Verify Python Version**
     - Ensure you have **Python 3.7+** installed and that you have the necessary permissions to run the bot on your Discord server.
