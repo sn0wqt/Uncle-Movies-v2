@@ -1,142 +1,136 @@
-# Uncle Movies Bot  
-#### Video Demo: [Insert URL here]  
-#### Description:  
+# Uncle Movies Bot
+#### Video Demo: [Insert URL here]
+#### Description:
 
-The **Uncle Movies Bot** is a **Discord bot** designed to help users **log, search, manage, and rate** their favorite movies and TV series. It features a seamless integration with the IMDb database using the `cinemagoer` library (the continuation of the now-deprecated `imdbpy` library), allowing users to search for movie details directly from Discord. Users can maintain a collection of movies, add custom ratings, and view detailed information about each entry, presented in visually rich embeds for a clean and organized experience.
+The **Uncle Movies Bot** is a **Discord bot** built to make managing your favorite movies and TV shows effortless. It taps into the IMDb database with the help of the `cinemagoer` library (the continued version of the old `imdbpy`), so you can quickly pull movie details right in Discord. Keep track of your movie collection, add your own ratings, and get all the juicy details neatly presented.
 
 ---
 
 ### **Features**
 
 - **Search Movies:**  
-  Users can search for movies or TV series by title using the `/search` command. Results include essential details like the title, IMDb ID, release year, IMDb rating, and cover image.  
-   
+    Use the `/search` command to look up movies or TV series by title. You'll see key details like the title, IMDb ID, release year, and even a cover image.
+    
 - **Add Movie to Collection:**  
-  The `/add` command allows users to add a movie to their personal collection by providing the IMDb ID. The bot checks if the movie already exists in the collection to prevent duplicates.
-
+    Add a movie to your personal collection with the `/add` command by entering its IMDb ID. The bot checks for duplicates so you don't end up with the same movie twice.
+    
 - **List Movies:**  
-  The `/list` command displays all movies in the user's collection. Each movie is shown with full details, including the title, release year, IMDb rating, custom user rating, and plot outline.
-
+    The `/list` command shows all the movies in your collection. Each entry comes with the title, cover image, release year, IMDb rating, your custom rating, and a plot outline.
+    
 - **Rate a Movie:**  
-  Users can rate a movie in their collection using the `/rate` command. The bot saves the user rating, allowing them to compare it with the IMDb rating.
-
+    With the `/rate` command, you can rate movies in your collection, then compare your rating to the IMDb one.
+    
 - **Delete Movie:**  
-  The `/delete` command allows users to remove a movie from their collection using the movie's ID.
-
+    Remove a movie from your collection using the `/delete` command by providing the movie's ID.
+    
 - **Help Command:**  
-  The `/help` command provides users with an overview of all available commands, their syntax, and example usage.
-
+    The `/help` command gives a quick rundown of all available commands along with their usage examples.
+    
 - **Ping Command:**  
-  A simple `/ping` command to check if the bot is responsive.
+    Use `/ping` to quickly check if the bot is online.
 
 ---
 
 ### **Project Structure**
 
-The project is implemented in Python and uses several libraries, including **discord.py**, **reactionmenu**, and **cinemagoer**. Here's an overview of the files in the project:
+The project is written in Python and leverages libraries like **discord.py**, **reactionmenu**, and **cinemagoer**. Here’s a quick look at the files:
 
 1. **project.py**  
-   This file contains all the bot's core functionality. It defines commands for searching, adding, listing, rating, and deleting movies. It also handles Discord events such as bot startup (`on_ready`) and command interactions. Key functions include:
-   - `add_movie()`: Adds a movie to the collection if it does not already exist.
-   - `delete_movie()`: Removes a movie from the collection based on its ID.
-   - `rate_movie()`: Updates the user rating for a specific movie.
-   - `get_movie_list()`: Retrieves the list of movies from the `movies.json` file.
-   - `search_movies()`: Fetches search results from IMDb for a given title.
-   - `create_movie_embed()`: Generates a rich embed to display movie details on Discord.
+     This file handles all the bot's main functions, including searching, adding, listing, rating, and deleting movies. It also takes care of Discord events like when the bot comes online (`on_ready`) and processes command interactions. Notable functions include:
+     - `add_movie()`: Adds a movie to your collection.
+     - `delete_movie()`: Removes a movie using its ID.
+     - `rate_movie()`: Updates your movie rating.
+     - `get_movie_list()`: Fetches your movie list from `movies.json`.
+     - `search_movies()`: Gets search results from IMDb.
+     - `create_movie_embed()`: Makes a neat embed to show movie details on Discord.
 
 2. **movies.json**  
-   This JSON file stores the user's movie collection, including details like title, IMDb ID, release year, ratings, and plot outlines.
+     This JSON file keeps a record of your movie collection, storing details like title, IMDb ID, release year, ratings, cover image, and plot.
 
-3. **requirements.txt**  
-   This file lists the Python dependencies required to run the project. Major libraries include:
-   - `discord.py`: For interacting with the Discord API.
-   - `reactionmenu`: For creating menu-based embeds.
-   - `cinemagoer`: For fetching movie data from IMDb.
-   - `python-dotenv`: For loading environment variables from a `.env` file.
+3. **.env**  
+     The `.env` file (kept out of public repos) holds sensitive info such as your bot token needed for Discord authentication.
 
-4. **.env**  
-   The `.env` file (not included in public repositories) stores sensitive information like the bot token, which is necessary for authenticating the bot with Discord.
-
-5. **test_project.py**  
-   This file includes test cases to ensure the bot's core functions work as expected. Tests cover various scenarios such as adding duplicate movies, deleting non-existent movies, and updating user ratings.
+4. **test_project.py**  
+     Contains test cases to ensure everything works correctly—from handling duplicates to updating ratings.
 
 ---
 
 ### **Design Choices**
 
-1. **Initial Project Structure:**  
-   Initially, I separated core features, data handling, and API calls into separate files for better modularity. The bot commands were also placed in a separate file. However, after reading the project guidelines on CS50P, which specified that all code should be contained in `project.py`, I combined everything into a single file as required by the course.
+1. **Project Structure:**  
+     Initially, features and API calls were split into separate files for clarity. But following the CS50P project guidelines (which specify having just one `project.py` file), everything was consolidated into one file.
 
-2. **Error Handling Approach:**  
-   I used **dictionary-based error handling** for simplicity. Each function returns either a success message or an error message in a consistent format, allowing the commands to handle responses easily.
+2. **Data Storage:**  
+     I opted for a JSON file (`movies.json`) to keep the project lightweight and easy to manage. While a database might be ideal for scaling, JSON works well for this project's scope.
 
-3. **Data Storage:**  
-   I chose to store movie data in a JSON file (`movies.json`) to keep the project lightweight and simple. While a database would offer better scalability, JSON is sufficient for this project's current scope.
+3. **Embed Display:**  
+     Instead of plain text dumps, rich embeds are used to display movie info. This makes it visually engaging and easy to navigate.
 
-4. **Embed Display Design:**  
-   Instead of dumping raw text, I opted to use rich embeds to present movie information. This makes the output visually appealing and easier to navigate.
-
-5. **Command Design:**  
-   Each command was designed to provide clear and concise interactions. For example, the `/add` and `/delete` commands provide direct feedback on whether the operation was successful or encountered an error.
+4. **Command Design:**  
+     The shift from old prefix commands (like `!ping` or `?help`) to slash commands (e.g. `/ping`, `/help`) offers a smoother, more user-friendly experience. Discord’s built-in autocomplete and formatting improve usability and reduce the need to remember complicated commands.
 
 ---
 
 ### **Future Improvements**
 
 - **Advanced Search Filters:**  
-  Implementing filters such as genre, year, or rating to refine search results.
-
+    Introduce filters like genre, year, or rating so users can quickly find movies that match their preferences.
+    
 - **Role-Based Permissions:**  
-  Restricting certain commands (e.g., `/delete`) to authorized users or roles.
-
+    Limit commands like `/delete` to certain users to prevent accidental removals—nobody wants their entire collection wiped out by a well-meaning friend.
+    
 - **Database Integration:**  
-  Migrating from JSON to a database for better scalability and performance.
-
+    Switching from JSON to a full database solution would help manage a larger movie collection more efficiently.
+    
 - **Error Logging:**  
-  Adding logging to capture and debug errors more efficiently.
+    Implement proper logging so that any issues are tracked instead of the bot quietly hoping nobody notices when something goes wrong.
+    
+- **User/Group Specific Lists:**  
+    Add the option for a separate movie list per user or group, ensuring personalized collections so that movie entries don't overlap.
 
 ---
 
 ### **How to Run the Project**
 
 1. **Clone the Repository**
-    - Open your terminal and run:
-      ```
-      git clone <your-repository-url>
-      cd <repository-folder>
-      ```
+        - Open your terminal and run:
+            ```
+            git clone <your-repository-url>
+            cd <repository-folder>
+            ```
 
 2. **Install Dependencies**
-    - Install the required dependencies with:
-      ```
-      pip install -r requirements.txt
-      ```
+        - Run:
+            ```
+            pip install -r requirements.txt
+            ```
 
 3. **Configure Environment Variables**
-    - Create a `.env` file in the project's root directory and add your bot token:
-      ```
-      BOT_TOKEN=<Your_Discord_Bot_Token>
-      ```
-        - `<Your_Discord_Bot_Token>` should be inside quotations `""`
+        - Create a `.env` file in the project root and add your bot token:
+            ```
+            BOT_TOKEN="<Your_Discord_Bot_Token>"
+            ```
+            Make sure the token is within quotation marks `""`
 
 4. **Verify Python Version**
-    - Ensure you have **Python 3.7+** installed and that you have the necessary permissions to run the bot on your Discord server.
+        - Ensure you have **Python 3.7+** installed and the necessary permissions to run the bot on your Discord server.
 
 5. **Start the Bot**
-    - Launch the bot by executing:
-      ```
-      python project.py
-      ```
+        - Launch it with:
+            ```
+            python project.py
+            ```
 
 6. **Invite the Bot to Your Discord Server**
-    - Go to the [Discord Developer Portal](https://discord.com/developers/applications) and navigate to your bot.
-    - Generate an **OAuth2 URL** by:
-      - Selecting the **bot** and **application.commands** scopes under OAuth2 settings.
-      - Assigning the required permissions (e.g., Send Messages, Embed Links).
-    - Copy the generated URL and use it to invite the bot to your server.
+        - Visit the [Discord Developer Portal](https://discord.com/developers/applications) and select your bot.
+        - Generate an **OAuth2 URL** by:
+            - Choosing the **bot** and **application.commands** scopes.
+            - Assigning the required permissions (like Send Messages and Embed Links).
+        - Copy the URL and use it to invite the bot to your server.
 
 7. **Get Started with Commands**
-    - Once the bot is online, use the `/help` command on your Discord server to view all available commands.
+        - Once online, type `/help` on your Discord server to see all the available commands.
 
 8. **Stop the Bot**
-    - Terminate the running bot by pressing **Ctrl+C** in your terminal or manually stopping the process.
+        - Simply press **Ctrl+C** in your terminal or stop the process manually.
+
