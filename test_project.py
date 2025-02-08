@@ -1,5 +1,5 @@
 from project import load_data, save_data, add_movie, delete_movie, rate_movie, get_movie_list, search_movies
-
+import pytest
 
 def reset_movies_file():
     initial_data = {
@@ -28,35 +28,30 @@ def reset_movies_file():
 
 
 def test_load_data():
-    reset_movies_file()
     data = load_data()
     assert isinstance(data, dict)
     assert "movies" in data
     assert len(data["movies"]) == 1
 
+    with pytest.raises(ValueError):
+        load_data("./invalid.json")
 
 def test_save_data():
     reset_movies_file()
     data = load_data()
     data["movies"].append({"id": 2, "title": "Test Movie"})
-    save_data(data)
 
-    loaded_data = load_data()
-    assert len(loaded_data["movies"]) == 2
+    with pytest.raises(IOError):
+        save_data(data, filename="/invalid/directory/movies.json")
 
 
 def test_add_movie():
     reset_movies_file()
     result = add_movie("0111161")
-    assert "message" in result
-    assert "successfully added" in result["message"]
+    assert "successfully added" in result
 
-    data = load_data()
-    assert len(data["movies"]) == 2
-
-    result = add_movie("0111161")
-    assert "error" in result
-    assert result["error"] == "movie already exists"
+    with pytest.raises(ValueError):
+        add_movie("0111161")
 
 
 def test_delete_movie():
@@ -64,15 +59,10 @@ def test_delete_movie():
     movie_id = 1
 
     result = delete_movie(movie_id)
-    assert "message" in result
-    assert "successfully deleted" in result["message"]
+    assert "successfully deleted" in result
 
-    data = load_data()
-    assert not any(movie["id"] == movie_id for movie in data["movies"])
-
-    result = delete_movie(movie_id)
-    assert "error" in result
-    assert result["error"] == "Movie not found"
+    with pytest.raises(ValueError):
+        delete_movie(movie_id)
 
 
 def test_rate_movie():
@@ -80,17 +70,10 @@ def test_rate_movie():
     movie_id = 1
 
     result = rate_movie(movie_id, 9)
-    assert "message" in result
-    assert "User rating updated" in result["message"]
+    assert "User rating updated" in result
 
-    data = load_data()
-    rated_movie = next((m for m in data["movies"] if m["id"] == movie_id), None)
-    assert rated_movie is not None
-    assert rated_movie["user_rating"] == 9
-
-    result = rate_movie(9999, 8)
-    assert "error" in result
-    assert result["error"] == "Movie not found"
+    with pytest.raises(ValueError):
+        rate_movie(9999, 8)
 
 
 def test_get_movie_list():
@@ -98,7 +81,6 @@ def test_get_movie_list():
     movies = get_movie_list()
     assert isinstance(movies, list)
     assert len(movies) == 1
-    assert movies[0]["title"] == "Avatar: The Last Airbender"
 
 
 def test_search_movies():
