@@ -1,5 +1,5 @@
 # Uncle Movies Bot
-#### Video Demo:
+
 #### Description:
 
 The **Uncle Movies Bot** is a **Discord bot** built to make managing your favorite movies and TV shows effortless. It taps into the IMDb database with the help of the `cinemagoer` library (the continued version of the old `imdbpy`), so you can quickly pull movie details right in Discord. Keep track of your movie collection, add your own ratings, and get all the juicy details neatly presented.
